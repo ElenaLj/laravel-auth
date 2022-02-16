@@ -31,6 +31,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Title</th>
                             <th scope="col">Slug</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Actions</th>
@@ -43,6 +44,13 @@
                                 <td>{{$post->id}}</td>
                                 <td>{{$post->title}}</td>
                                 <td>{{$post->slug}}</td>
+                                <td>
+                                    @if ($post->published)
+                                        <span class="badge badge-success w-100">Published</span>
+                                    @else
+                                        <span class="badge badge-warning w-100">Draft</span>
+                                    @endif 
+                                </td>
                                 {{-- OPEN RECORD --}}
                                 <td>
                                     <a href="{{route("posts.show", $post->id)}}">
