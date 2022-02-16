@@ -122,14 +122,16 @@ class PostController extends Controller
             $post->title = $data["title"];
             //generate new slug
             $slug = Str::of($post->title)->slug('-');
-            $count = 1;
-
-            while(Post::where("slug", $slug)->first() ) {
-            $slug = Str::of($post->title)->slug('-') . "-{$count}";
-            $count++;
+            if($slug != $post->slug){
+                $count = 1;
+                
+                while(Post::where("slug", $slug)->first() ) {
+                    $slug = Str::of($post->title)->slug('-') . "-{$count}";
+                    $count++;
+                }
+        
+                $post->slug = $slug;
             }
-
-            $post->slug = $slug;
         }
 
         $post->content = $data["content"];
