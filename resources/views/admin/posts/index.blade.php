@@ -8,7 +8,7 @@
                 <div class="card-header">All Posts</div>
 
                 <div class="card-body">
-                    <ul>
+                    {{-- <ul>
                         @foreach ($posts as $post)
                             <li class="d-flex justify-content-between mb-3">
                                 {{$post->title}}
@@ -18,7 +18,33 @@
                             </li>
                                
                         @endforeach
-                    </ul>
+                    </ul> --}}
+
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Slug</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($posts as $post)
+                            <tr>
+                                <td>{{$post->id}}</td>
+                                <td>{{$post->title}}</td>
+                                <td>{{$post->slug}}</td>
+                                <td>
+                                    <a href="{{route("posts.show", $post->id)}}">
+                                        <button type="button" class="btn btn-light">Show</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                      </table>
                 </div>
             </div>
         </div>
