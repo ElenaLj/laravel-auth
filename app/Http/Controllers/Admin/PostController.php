@@ -56,9 +56,10 @@ class PostController extends Controller
         $newPost->title = $data["title"];
         $newPost->content = $data["content"];
 
-        if (isset($data["published"]) ) {
-            $newPost->published = true;
-        }
+        // if (isset($data["published"]) ) {
+        //     $newPost->published = true;
+        // }
+        $newPost->published = isset($data["published"]);
 
         $slug = Str::of($newPost->title)->slug('-');
         $count = 1;
@@ -91,9 +92,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -103,9 +104,48 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        //data validation
+        $request->validate(
+            [
+            "title" => "required|string|max:150",
+            "content" => "required",
+            "published" => "sometimes|accepted",
+            ]
+        );
+
+        $data = $request->all();
+
+        //update record
+        if( $post->title != $data["title"]) {
+            $post->title = $data["title"];
+            //generate new slug
+            $slug = Str::of($post->title)->slug('-');
+            $count = 1;
+
+            while(Post::where("slug", $slug)->first() ) {
+            $slug = Str::of($post->title)->slug('-') . "-{$count}";
+            $count++;
+            }
+
+            $post->slug = $slug;
+        }
+
+        $post->content = $data["content"];
+
+        // if (isset($data["published"]) ) {
+        //     $post->published = true;
+        // } else {
+        //     $post->published = false;
+        // }
+
+        $post->published = isset($data["published"]);
+        
+        $post->save();
+
+        //redirect
+        return redirect()->route("posts.show", $post->id);
     }
 
     /**

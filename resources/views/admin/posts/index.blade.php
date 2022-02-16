@@ -32,6 +32,7 @@
                             <th scope="col">Title</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Actions</th>
+                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
 
@@ -44,6 +45,11 @@
                                 <td>
                                     <a href="{{route("posts.show", $post->id)}}">
                                         <button type="button" class="btn btn-light">Show</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{route("posts.edit", $post->id)}}">
+                                        <button type="button" class="btn btn-warning">Edit</button>
                                     </a>
                                 </td>
                             </tr>
