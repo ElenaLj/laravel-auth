@@ -16,23 +16,35 @@
                         {{-- Post Title --}}
                         <div class="form-group">
                             <label for="title">Post title</label>
-                            <input name="title" type="text" class="form-control" id="title" placeholder="Insert title here">
+                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Insert title here" value="{{old('title')}}">
                         </div>
+                        {{-- Post Title Error --}}
+                        @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                         {{-- Post Content --}}
                         <div class="form-group">
                             <label for="content">Post content</label>
-                            <textarea name="content" class="form-control" id="content" rows="10" placeholder="Insert text here"></textarea>
+                            <textarea name="content" class="form-control @error('content') is-invalid @enderror" id="content" rows="10" placeholder="Insert text here">{{old('content')}}</textarea>
                         </div>
+                        {{-- Post Content Error --}}
+                        @error('content')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                         {{-- Checkbox --}}
                         <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="published" name="published">
+                            <input type="checkbox" class="form-check-input @error('published') is-invalid @enderror" id="published" name="published" {{old('published') ? 'checked' : '' }}>
                             <label class="form-check-label" for="published">Publish</label>
                         </div>
+                        {{-- Checkbox Error --}}
+                        @error('published')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                         {{-- Sumbit Button --}}
-                        <button type="submit" class="btn btn-dark">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </form>
 
                     <div class="mt-3">
@@ -45,14 +57,4 @@
         </div>
     </div>
 </div>
-
-@if ($errors->any())
-    <div class="alert alert-danger mt-2">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
 @endsection
