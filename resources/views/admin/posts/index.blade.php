@@ -33,6 +33,7 @@
                             <th scope="col">Slug</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Actions</th>
+                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
 
@@ -42,15 +43,25 @@
                                 <td>{{$post->id}}</td>
                                 <td>{{$post->title}}</td>
                                 <td>{{$post->slug}}</td>
+                                {{-- OPEN RECORD --}}
                                 <td>
                                     <a href="{{route("posts.show", $post->id)}}">
                                         <button type="button" class="btn btn-light">Show</button>
                                     </a>
                                 </td>
+                                {{-- EDIT RECORD --}}
                                 <td>
                                     <a href="{{route("posts.edit", $post->id)}}">
                                         <button type="button" class="btn btn-warning">Edit</button>
                                     </a>
+                                </td>
+                                {{-- DELETE RECORD --}}
+                                <td>
+                                    <form action="{{route("posts.destroy", $post->id)}}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
