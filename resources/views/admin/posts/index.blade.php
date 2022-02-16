@@ -19,6 +19,11 @@
                                
                         @endforeach
                     </ul> --}}
+                    <div class="mb-3">
+                        <a href="{{route("posts.create")}}">
+                            <button type="button" class="btn btn-dark">Add Post</button>
+                        </a>
+                    </div>
 
                     <table class="table">
                         <thead>
